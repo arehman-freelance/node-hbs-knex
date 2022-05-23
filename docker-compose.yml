@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+
+  mariadb:
+    image: mariadb:10.6
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+      - --skip-innodb-read-only-compressed # Temporary fix for MariaDB 10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  web:
+    build: .
+    command: npm run start
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mariadb
+    environment:
+      DATABASE_URL: postgres://todoapp@postgres/todos
