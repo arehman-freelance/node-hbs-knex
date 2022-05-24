@@ -9,7 +9,7 @@ exports.view = (req, res) => {
       let removedUser = req.query.removed;
       res.render('home', { rows, removedUser });
 
-      console.log('The data from user table: \n', rows);
+      // console.log('The data from user table: \n', rows);
     }).catch(err => {
       console.log(err);
 
@@ -26,7 +26,7 @@ exports.find = (req, res) => {
     .then(rows => {
       res.render('home', { rows });
 
-      console.log('The data from user table: \n', rows);
+      // console.log('The data from user table: \n', rows);
     }).catch(err => {
       console.log(err);
 
@@ -46,7 +46,7 @@ exports.create = (req, res) => {
     .then(rows => {
       res.render('add-user', { alert: 'User added successfully.' });
 
-      console.log('The data from user table: \n', rows);
+      // console.log('The data from user table: \n', rows);
     }).catch(err => {
       console.log(err);
 
@@ -57,15 +57,15 @@ exports.create = (req, res) => {
 
 // Edit user
 exports.edit = (req, res) => {
-  // User the connection
-  connection.query('SELECT * FROM user WHERE id = ?', [req.params.id], (err, rows) => {
-    if (!err) {
+  knex('user')
+    .where({ id: req.params.id })
+    .then(rows => {
       res.render('edit-user', { rows });
-    } else {
+      // console.log('The data from user table: \n', rows);
+    }).catch(err => {
       console.log(err);
-    }
-    console.log('The data from user table: \n', rows);
-  });
+
+    });  
 }
 
 
@@ -78,7 +78,7 @@ exports.update = (req, res) => {
     .then(rows => {
       res.render('edit-user', { rows, alert: `${first_name} has been updated.` });
 
-      console.log('The data from user table: \n', rows);
+      // console.log('The data from user table: \n', rows);
     }).catch(err => {
       console.log(err);
 
@@ -95,7 +95,7 @@ exports.delete = (req, res) => {
     .then(rows => {
       let removedUser = encodeURIComponent('User successeflly removed.');
       res.redirect('/?removed=' + removedUser);
-      console.log('The data from user table: \n', rows);
+      // console.log('The data from user table: \n', rows);
     }).catch(err => {
       console.log(err);
 
@@ -109,7 +109,7 @@ exports.viewall = (req, res) => {
     .where({ id: req.params.id })
     .then(rows => {
       res.render('view-user', { rows });
-      console.log('The data from user table: \n', rows);
+      // console.log('The data from user table: \n', rows);
     }).catch(err => {
       console.log(err);
 
