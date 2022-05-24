@@ -15,10 +15,19 @@ exports.login = (req, res) => {
     const accessToken = generateAccessToken('admin')
     // console.log(accessToken);
     
-    // res.cookie('token', accessToken)
+    res.cookie('token', accessToken)
 
     // res.render('home');
-    res.json({
-        accessToken
-    });  
+    res.redirect("/")
+
+    // res.json({
+    //     accessToken
+    // });  
+}
+
+// Logout User
+exports.logout = (req, res) => {
+    res.clearCookie('token')
+
+    res.redirect("/login")
 }

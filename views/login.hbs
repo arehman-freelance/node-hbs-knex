@@ -1,4 +1,4 @@
-<form id="formoid" novalidate>
+<form id="loginForm" method="post" action="/login">
     <div>
         <label class="title">User</label>
         <input type="text" id="usr" name="usr" >
@@ -11,69 +11,3 @@
         <input type="submit" id="submitButton"  name="submitButton" value="Submit">
     </div>
 </form>
-
-
-<script type="text/javascript">
-
-$("#formoid").submit(function(event) {
-
-  /* stop form from submitting normally */
-  event.preventDefault();
-
-
-  /* get the action attribute from the <form action=""> element */
-  var $form = $( this ), url = $form.attr( 'action' );
-
-  fetch('/login', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json, text/plain, */*',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ usr: $('#usr').val(), pass: $('#pass').val()})
-}).then(res => res.json())
-  .then(res => {
-      document.cookie = `token=${res.accessToken}`;
-      window.location.replace("/");
-
-  });
-
-});
-
-
-
-</script>
-
-
-
-<!---
-<script type='text/javascript'>
-/* attach a submit handler to the form */
-$("#formoid").submit(function(event) {
-debugger;
-
-  /* stop form from submitting normally */
-  event.preventDefault();
-
-  /* get the action attribute from the <form action=""> element */
-  var $form = $( this ), url = $form.attr( 'action' );
-
-  /* Send the data using post with element id name and name2*/
-  var posting = $.post( url, { usr: $('#usr').val(), pass: $('#pass').val()} );
-
-  /* Alerts the results */
-  posting.done(function( data ) {
-      console.log(data)
-    alert('success');
-    
-  });
-});
-
-// get token from fetch request
-const token = await res.json();
-
-// set token in cookie
-document.cookie = `token=${token}`
-
-</script>
--->
