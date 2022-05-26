@@ -39,9 +39,14 @@ app.use('/login', loginRoutes);
 const jwtAuth = require('./server/middlewares/jwt');
 app.use('/', jwtAuth.authenticateToken);
 
+// PDF Routes
+const pdfRoutes = require('./server/routes/pdf');
+app.use('/pdf', pdfRoutes);
+
 // User Routes
 const userRoutes = require('./server/routes/user');
 app.use('/', userRoutes);
+
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
