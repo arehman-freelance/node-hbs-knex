@@ -25,7 +25,7 @@ https://devhints.io/knex
 2. knex (Done)
 3. Redis Cache
 4. Redis queue
-5. Cron
+5. Cron (Done)
 6. Jwt (Done)
 7. Handlebars (Done)
 8. Background jobs
