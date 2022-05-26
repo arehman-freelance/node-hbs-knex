@@ -43,6 +43,10 @@ app.use('/', jwtAuth.authenticateToken);
 const pdfRoutes = require('./server/routes/pdf');
 app.use('/pdf', pdfRoutes);
 
+// EMail Routes
+const emailRoutes = require('./server/routes/email');
+app.use('/email', emailRoutes);
+
 // User Routes
 const userRoutes = require('./server/routes/user');
 app.use('/', userRoutes);

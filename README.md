@@ -29,7 +29,7 @@ https://devhints.io/knex
 6. Jwt (Done)
 7. Handlebars (Done)
 8. Background jobs
-9. Emails
+9. Emails (Done)
 10. Socketio
 11. Pdf converter (Done)
 
