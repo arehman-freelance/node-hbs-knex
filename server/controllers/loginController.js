@@ -4,6 +4,8 @@ const generateAccessToken = (jwt_user) =>{
     return jwt.sign(jwt_user, process.env.JWT_SECRET);      
 }
 
+const cron = require('../cron/cron')
+
 
 // View Login
 exports.view = (req, res) => {
@@ -17,6 +19,9 @@ exports.login = (req, res) => {
     
     res.cookie('token', accessToken)
 
+    // cron
+    cron.cron1();
+    
     // res.render('home');
     res.redirect("/")
 
