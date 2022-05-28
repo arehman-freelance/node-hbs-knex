@@ -1,19 +1,22 @@
-const jwt = require('jsonwebtoken');
+import jwt from "jsonwebtoken";
+import * as cron from '../cron/cron.js'
+import * as bg from '../utils/background.js' 
+import * as redis from '../db/redis.js' 
+
 
 const generateAccessToken = (jwt_user) =>{
     return jwt.sign(jwt_user, process.env.JWT_SECRET);      
 }
 
-const cron = require('../cron/cron')
-
 
 // View Login
-exports.view = (req, res) => {
+export const view = (req, res) => {
+
     res.render('login');  
 }
 
 // Login User
-exports.login = (req, res) => {
+export const login = (req, res) => {
     const accessToken = generateAccessToken('admin')
     // console.log(accessToken);
     
@@ -21,7 +24,13 @@ exports.login = (req, res) => {
 
     // cron
     cron.cron1();
+
+    // background
+    bg.backgroundfunction();
     
+    // redis 
+    redis.set_value('admin', 'hello');
+
     // res.render('home');
     res.redirect("/")
 
@@ -31,7 +40,10 @@ exports.login = (req, res) => {
 }
 
 // Logout User
-exports.logout = (req, res) => {
+export const logout = async(req, res) => {
+    // redis 
+    console.log(await redis.get_value('admin'));
+
     res.clearCookie('token')
 
     res.redirect("/login")

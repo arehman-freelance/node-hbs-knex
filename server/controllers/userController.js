@@ -1,8 +1,8 @@
-const knex = require('../db/connection')
-
+// const knex = require('../db/connection')
+import knex from "../db/connection.cjs"
 
 // View Users
-exports.view = (req, res) => {
+export const view = (req, res) => {
   knex('user')
     .where({ status: "active" })
     .then(rows => {
@@ -18,7 +18,7 @@ exports.view = (req, res) => {
 }
 
 // Find User by Search
-exports.find = (req, res) => {
+export const find = (req, res) => {
   let searchTerm = '%' + req.body.search + '%';
   knex('user')
     .whereILike('first_name', searchTerm )
@@ -33,12 +33,12 @@ exports.find = (req, res) => {
     });
 }
 
-exports.form = (req, res) => {
+export const form = (req, res) => {
   res.render('add-user');
 }
 
 // Add new user
-exports.create = (req, res) => {
+export const create = (req, res) => {
   const { first_name, last_name, email, phone, comments } = req.body;
 
   knex('user')
@@ -56,7 +56,7 @@ exports.create = (req, res) => {
 
 
 // Edit user
-exports.edit = (req, res) => {
+export const edit = (req, res) => {
   knex('user')
     .where({ id: req.params.id })
     .then(rows => {
@@ -70,7 +70,7 @@ exports.edit = (req, res) => {
 
 
 // Update User
-exports.update = (req, res) => {
+export const update = (req, res) => {
   const { first_name, last_name, email, phone, comments } = req.body;
   knex('user')
     .where({ id: req.params.id })
@@ -86,7 +86,7 @@ exports.update = (req, res) => {
 }
 
 // Delete User
-exports.delete = (req, res) => {
+export const userDelete = (req, res) => {
 
   // Delete a record
   knex('user')
@@ -94,7 +94,7 @@ exports.delete = (req, res) => {
     .del()
     .then(rows => {
       let removedUser = encodeURIComponent('User successeflly removed.');
-      res.redirect('/?removed=' + removedUser);
+      // res.redirect('/?removed=' + removedUser);
       // console.log('The data from user table: \n', rows);
     }).catch(err => {
       console.log(err);
@@ -104,7 +104,7 @@ exports.delete = (req, res) => {
 }
 
 // View Users
-exports.viewall = (req, res) => {
+export const viewall = (req, res) => {
   knex('user')
     .where({ id: req.params.id })
     .then(rows => {
@@ -115,3 +115,4 @@ exports.viewall = (req, res) => {
 
     });
 }
+

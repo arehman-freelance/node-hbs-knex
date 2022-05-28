@@ -1,23 +1,24 @@
-const express = require('express');
-const exphbs = require('express-handlebars');
-const cookieParser = require('cookie-parser')
 
-//const bodyParser = require('body-parser'); // No longer Required
-//const mysql = require('mysql'); // Not required -> moved to userController
+// imports
+import express from "express";
+import { create } from 'express-handlebars';
+import cookieParser from "cookie-parser"
 
-require('dotenv').config();
+import './server/utils/dotenv.cjs'
+import userRoutes from "./server/routes/user.js"
+import {authenticateToken} from "./server/middlewares/jwt.js"
+import pdfRoutes from "./server/routes/pdf.js"
+import loginRoutes from "./server/routes/login.js"
+import emailRoutes from "./server/routes/email.js"
 
+
+// app
 const app = express();
 const port = process.env.PORT || 5001;
 
-// Parsing middleware
-// Parse application/x-www-form-urlencoded
-// app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.urlencoded({ extended: true })); // New
-
-// Parse application/json
-// app.use(bodyParser.json());
-app.use(express.json()); // New
+// middlewares
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.json()); 
 
 // Cookie Parser
 app.use(cookieParser())
@@ -26,31 +27,27 @@ app.use(cookieParser())
 app.use(express.static('public'));
 
 // Templating Engine
-const handlebars = exphbs.create({ extname: '.hbs', });
-app.engine('.hbs', handlebars.engine);
+const hbs = create({ extname: '.hbs', });
+app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 
+// Routes
 
 // Login Routes
-const loginRoutes = require('./server/routes/login');
 app.use('/login', loginRoutes);
 
 // Middlewares
-const jwtAuth = require('./server/middlewares/jwt');
-app.use('/', jwtAuth.authenticateToken);
+app.use('/', authenticateToken);
 
 // PDF Routes
-const pdfRoutes = require('./server/routes/pdf');
 app.use('/pdf', pdfRoutes);
 
 // EMail Routes
-const emailRoutes = require('./server/routes/email');
 app.use('/email', emailRoutes);
 
 // User Routes
-const userRoutes = require('./server/routes/user');
 app.use('/', userRoutes);
 
 
-
+// Listen
 app.listen(port, () => console.log(`Listening on port ${port}`));
