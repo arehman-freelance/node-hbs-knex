@@ -24,7 +24,7 @@ https://devhints.io/knex
 1. Express js (Done)
 2. knex (Done)
 3. Redis Cache (Done)
-4. Redis queue
+4. Redis queue (Done)
 5. Cron (Done)
 6. Jwt (Done)
 7. Handlebars (Done)

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import * as cron from '../cron/cron.js'
 import * as bg from '../utils/background.js' 
 import * as redis from '../db/redis.js' 
-
+import {enqueue} from '../queues/queue.cjs'
 
 const generateAccessToken = (jwt_user) =>{
     return jwt.sign(jwt_user, process.env.JWT_SECRET);      
@@ -30,6 +30,9 @@ export const login = (req, res) => {
     
     // redis 
     redis.set_value('admin', 'hello');
+
+    // enqueue
+    enqueue({'hello': 'from queue world'});
 
     // res.render('home');
     res.redirect("/")

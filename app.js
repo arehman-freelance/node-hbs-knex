@@ -11,6 +11,7 @@ import pdfRoutes from "./server/routes/pdf.js"
 import loginRoutes from "./server/routes/login.js"
 import emailRoutes from "./server/routes/email.js"
 
+import {process_queues} from './server/queues/queue.cjs'
 
 // app
 const app = express();
@@ -48,6 +49,9 @@ app.use('/email', emailRoutes);
 // User Routes
 app.use('/', userRoutes);
 
+
+// Queue Process
+process_queues();
 
 // Listen
 app.listen(port, () => console.log(`Listening on port ${port}`));
