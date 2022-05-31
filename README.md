@@ -40,8 +40,9 @@ B. frontend
 -----------
 1. Combo box
 2. pagination (Done)
-3. search and filters
+3. search (Done)
 4. login - condition on main layout (Done)
+5. Image uploading
 
 ### extensions
 1. cjs extension for common js file (require)

@@ -31,6 +31,8 @@ export const find = (req, res) => {
   knex('user')
     .whereILike('first_name', searchTerm)
     .orWhereILike('last_name', searchTerm)
+    .orWhereILike('email', searchTerm)
+    .orWhereILike('phone', searchTerm)
     .then(rows => {
       res.render('home', { rows });
 
