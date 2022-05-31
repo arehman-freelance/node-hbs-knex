@@ -21,6 +21,9 @@ $ npm start
 https://devhints.io/knex
 
 ### R&D
+
+A. backend
+----------
 1. Express js (Done)
 2. knex (Done)
 3. Redis Cache (Done)
@@ -32,6 +35,13 @@ https://devhints.io/knex
 9. Emails (Done)
 10. Socketio
 11. Pdf converter (Done)
+
+B. frontend
+-----------
+1. Combo box
+2. pagination (Done)
+3. search and filters
+4. login - condition on main layout (Done)
 
 ### extensions
 1. cjs extension for common js file (require)

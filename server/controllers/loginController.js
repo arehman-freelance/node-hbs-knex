@@ -12,7 +12,7 @@ const generateAccessToken = (jwt_user) =>{
 // View Login
 export const view = (req, res) => {
 
-    res.render('login');  
+    res.render('login', { hideNave: true });  
 }
 
 // Login User

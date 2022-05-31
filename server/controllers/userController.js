@@ -3,17 +3,25 @@ import knex from "../db/connection.cjs"
 
 // View Users
 export const view = (req, res) => {
-  knex('user')
-    .where({ status: "active" })
-    .then(rows => {
-      let removedUser = req.query.removed;
-      res.render('home', { rows, removedUser });
+  console.log(req.query)
 
-      // console.log('The data from user table: \n', rows);
-    }).catch(err => {
-      console.log(err);
+  let query = knex('user')
+    .where({ status: "active" });
 
-    });
+  if (req.query.limit != 'All') {
+    query.limit(req.query.limit);
+  }
+
+
+  query.then(rows => {
+    let removedUser = req.query.removed;
+    res.render('home', { rows, removedUser });
+
+    // console.log('The data from user table: \n', rows);
+  }).catch(err => {
+    console.log(err);
+
+  });
 
 }
 
@@ -21,8 +29,8 @@ export const view = (req, res) => {
 export const find = (req, res) => {
   let searchTerm = '%' + req.body.search + '%';
   knex('user')
-    .whereILike('first_name', searchTerm )
-    .orWhereILike('last_name', searchTerm )
+    .whereILike('first_name', searchTerm)
+    .orWhereILike('last_name', searchTerm)
     .then(rows => {
       res.render('home', { rows });
 
@@ -65,7 +73,7 @@ export const edit = (req, res) => {
     }).catch(err => {
       console.log(err);
 
-    });  
+    });
 }
 
 
