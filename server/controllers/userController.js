@@ -1,5 +1,7 @@
 // const knex = require('../db/connection')
 import knex from "../db/connection.cjs"
+import * as fu from '../utils/file_upload.cjs'
+
 
 // View Users
 export const view = (req, res) => {
@@ -81,13 +83,16 @@ export const edit = (req, res) => {
 
 // Update User
 export const update = (req, res) => {
+  console.log('ARH');
+  console.log(req.files);
+
   const { first_name, last_name, email, phone, comments } = req.body;
   knex('user')
     .where({ id: req.params.id })
     .update({ first_name, last_name, email, phone, comments })
     .then(rows => {
+      fu.upload(req);
       res.render('edit-user', { rows, alert: `${first_name} has been updated.` });
-
       // console.log('The data from user table: \n', rows);
     }).catch(err => {
       console.log(err);

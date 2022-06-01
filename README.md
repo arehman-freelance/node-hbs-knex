@@ -42,7 +42,7 @@ B. frontend
 2. pagination (Done)
 3. search (Done)
 4. login - condition on main layout (Done)
-5. Image uploading
+5. Image uploading (Done)
 
 ### extensions
 1. cjs extension for common js file (require)
