@@ -1,18 +1,19 @@
 
 // imports
-import express from "express";
-import { create } from 'express-handlebars';
-import cookieParser from "cookie-parser"
-import fileUpload from 'express-fileupload';
+const express = require("express");
+const ehb = require('express-handlebars');
+const cookieParser = require("cookie-parser");
+const fileUpload = require('express-fileupload');
 
-import './server/utils/dotenv.cjs'
-import userRoutes from "./server/routes/user.js"
-import {authenticateToken} from "./server/middlewares/jwt.js"
-import pdfRoutes from "./server/routes/pdf.js"
-import loginRoutes from "./server/routes/login.js"
-import emailRoutes from "./server/routes/email.js"
+require('dotenv').config();
 
-import {process_queues} from './server/queues/queue.cjs'
+const userRoutes = require("./server/routes/user.js");
+const  pdfRoutes = require("./server/routes/pdf.js");
+const  loginRoutes = require("./server/routes/login.js");
+const  emailRoutes = require("./server/routes/email.js");
+
+const  jwt = require("./server/middlewares/jwt.js")
+const  queues = require('./server/queues/queue.js');
 
 // app
 const app = express();
@@ -30,7 +31,7 @@ app.use(cookieParser())
 app.use(express.static('public'));
 
 // Templating Engine
-const hbs = create({ extname: '.hbs', });
+const hbs = ehb.create({ extname: '.hbs', });
 app.engine('.hbs', hbs.engine);
 app.set('view engine', '.hbs');
 
@@ -40,7 +41,7 @@ app.set('view engine', '.hbs');
 app.use('/login', loginRoutes);
 
 // Middlewares
-app.use('/', authenticateToken);
+app.use('/', jwt.authenticateToken);
 
 // PDF Routes
 app.use('/pdf', pdfRoutes);
@@ -53,7 +54,7 @@ app.use('/', userRoutes);
 
 
 // Queue Process
-process_queues();
+queues.process_queues();
 
 // Listen
 app.listen(port, () => console.log(`Listening on port ${port}`));

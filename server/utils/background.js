@@ -1,7 +1,7 @@
 let service;
 let process;
 
-export const backgroundfunction = () =>{
+exports.backgroundfunction = () =>{
 
     // Both functions will execute in background
     Promise.all([getServices(), getProcess()]).then((val) => {

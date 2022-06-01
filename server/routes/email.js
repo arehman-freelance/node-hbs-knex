@@ -1,8 +1,8 @@
-import express from "express";
+const express =  require("express");
 const router = express.Router();
-import * as emailController from '../controllers/emailController.js';
+const emailController = require('../controllers/emailController.js');
 
 // Routes
 router.get('/', emailController.send);
   
-export default router;
+module.exports = router;

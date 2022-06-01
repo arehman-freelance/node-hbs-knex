@@ -1,8 +1,16 @@
-import jwt from "jsonwebtoken";
-import * as cron from '../cron/cron.js'
-import * as bg from '../utils/background.js' 
-import * as redis from '../db/redis.js' 
-import {enqueue} from '../queues/queue.cjs'
+const jwt = require("jsonwebtoken");
+const cron = require('../cron/cron.js');
+const bg = require('../utils/background.js'); 
+// let redis = import('../db/redis.mjs') 
+const  queue  = require('../queues/queue.js')
+
+let redis;
+async function loadMyModule() {
+    const { set_value,  get_value} = await import('../db/redis.mjs');
+    redis = { set_value,  get_value}
+}
+
+loadMyModule();
 
 const generateAccessToken = (jwt_user) =>{
     return jwt.sign(jwt_user, process.env.JWT_SECRET);      
@@ -10,13 +18,13 @@ const generateAccessToken = (jwt_user) =>{
 
 
 // View Login
-export const view = (req, res) => {
+exports.view = (req, res) => {
 
     res.render('login', { hideNave: true });  
 }
 
 // Login User
-export const login = (req, res) => {
+exports.login = (req, res) => {
     const accessToken = generateAccessToken('admin')
     // console.log(accessToken);
     
@@ -32,7 +40,7 @@ export const login = (req, res) => {
     redis.set_value('admin', 'hello');
 
     // enqueue
-    enqueue({'hello': 'from queue world'});
+    queue.enqueue({'hello': 'from queue world'});
 
     // res.render('home');
     res.redirect("/")
@@ -43,7 +51,7 @@ export const login = (req, res) => {
 }
 
 // Logout User
-export const logout = async(req, res) => {
+exports.logout = async(req, res) => {
     // redis 
     console.log(await redis.get_value('admin'));
 

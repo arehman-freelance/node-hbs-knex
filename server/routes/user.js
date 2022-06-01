@@ -1,7 +1,6 @@
-import express from "express";
+const express =  require("express");
 const router = express.Router();
-// const userController = require('../controllers/userController');
-import * as userController from "../controllers/userController.js"
+const userController = require('../controllers/userController.js');
 
 // Routes
 router.get('/', userController.view);
@@ -14,6 +13,4 @@ router.post('/edituser/:id', userController.update);
 router.get('/viewuser/:id', userController.viewall);
 router.get('/:id',userController.userDelete);
   
-// module.exports = router;
-
-export default router;
+module.exports = router;

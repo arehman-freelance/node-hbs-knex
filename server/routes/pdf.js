@@ -1,9 +1,9 @@
-import express from "express";
+const express =  require("express");
 const router = express.Router();
 
-import * as pdfController from "../controllers/pdfController.js"
+const pdfController = require("../controllers/pdfController.js");
 
 // Routes
 router.get('/', pdfController.view);
   
-export default router;
+module.exports = router;

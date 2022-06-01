@@ -1,7 +1,7 @@
-import html_to_pdf from 'html-pdf-node';
+const html_to_pdf = require('html-pdf-node');
 
 // View Login
-export const view = (req, res) => {
+exports.view = (req, res) => {
 
 let options = { format: 'A4', args: ['--no-sandbox', '--disable-setuid-sandbox'] };
 

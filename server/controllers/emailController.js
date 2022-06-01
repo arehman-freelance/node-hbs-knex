@@ -1,8 +1,17 @@
-import html_to_pdf from  'html-pdf-node'
-import * as emailUtils from '../utils/emails.js';
+const html_to_pdf = require('html-pdf-node');
+// const emailUtils = import('../utils/emails.mjs');
+
+let emailUtils;
+async function loadMyModule() {
+    const { send_email} = await import('../utils/emails.mjs');
+    emailUtils = { send_email}
+}
+
+loadMyModule();
+
 
 // View Login
-export const send = (req, res) => {
+exports.send = (req, res) => {
 
     res.render('email1', {name:'kuch bhi'}, (err, html)=>{
         emailUtils.send_email(html)

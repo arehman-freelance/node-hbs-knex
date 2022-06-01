@@ -1,10 +1,10 @@
 // const knex = require('../db/connection')
-import knex from "../db/connection.cjs"
-import * as fu from '../utils/file_upload.cjs'
+const knex = require("../db/connection.js");
+const fu = require('../utils/file_upload.js');
 
 
 // View Users
-export const view = (req, res) => {
+exports.view = (req, res) => {
   console.log(req.query)
 
   let query = knex('user')
@@ -28,7 +28,7 @@ export const view = (req, res) => {
 }
 
 // Find User by Search
-export const find = (req, res) => {
+exports.find = (req, res) => {
   let searchTerm = '%' + req.body.search + '%';
   knex('user')
     .whereILike('first_name', searchTerm)
@@ -45,12 +45,12 @@ export const find = (req, res) => {
     });
 }
 
-export const form = (req, res) => {
+exports.form = (req, res) => {
   res.render('add-user');
 }
 
 // Add new user
-export const create = (req, res) => {
+exports.create = (req, res) => {
   const { first_name, last_name, email, phone, comments, manager } = req.body;
 
   knex('user')
@@ -68,7 +68,7 @@ export const create = (req, res) => {
 
 
 // Edit user
-export const edit = (req, res) => {
+exports.edit = (req, res) => {
   knex('user')
     .where({ id: req.params.id })
     .then(rows => {
@@ -82,7 +82,7 @@ export const edit = (req, res) => {
 
 
 // Update User
-export const update = (req, res) => {
+exports.update = (req, res) => {
   console.log('ARH');
   console.log(req.files);
 
@@ -101,7 +101,7 @@ export const update = (req, res) => {
 }
 
 // Delete User
-export const userDelete = (req, res) => {
+exports.userDelete = (req, res) => {
 
   // Delete a record
   knex('user')
@@ -119,7 +119,7 @@ export const userDelete = (req, res) => {
 }
 
 // View Users
-export const viewall = (req, res) => {
+exports.viewall = (req, res) => {
   knex('user')
     .where({ id: req.params.id })
     .then(rows => {
@@ -132,7 +132,7 @@ export const viewall = (req, res) => {
 }
 
 // Manager Auto Complete
-export const managerAutoComplete = (req, res) => {
+exports.managerAutoComplete = (req, res) => {
   console.log(req.query.q)
   console.log('-----managerAutoComplete-----')
   let searchTerm = '%' + req.query.q + '%';
