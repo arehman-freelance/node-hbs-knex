@@ -16,7 +16,7 @@ import {process_queues} from './server/queues/queue.cjs'
 
 // app
 const app = express();
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 // middlewares
 app.use(express.urlencoded({ extended: true })); 

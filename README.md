@@ -38,7 +38,7 @@ A. backend
 
 B. frontend
 -----------
-1. Combo box
+1. Select2 (Done)
 2. pagination (Done)
 3. search (Done)
 4. login - condition on main layout (Done)

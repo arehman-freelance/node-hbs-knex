@@ -51,10 +51,10 @@ export const form = (req, res) => {
 
 // Add new user
 export const create = (req, res) => {
-  const { first_name, last_name, email, phone, comments } = req.body;
+  const { first_name, last_name, email, phone, comments, manager } = req.body;
 
   knex('user')
-    .insert({ 'first_name': first_name, 'last_name': last_name, 'email': email, 'phone': phone, 'comments': comments })
+    .insert({ 'first_name': first_name, 'last_name': last_name, 'email': email, 'phone': phone, 'comments': comments, 'manager': manager })
     .then(rows => {
       res.render('add-user', { alert: 'User added successfully.' });
 
@@ -86,10 +86,10 @@ export const update = (req, res) => {
   console.log('ARH');
   console.log(req.files);
 
-  const { first_name, last_name, email, phone, comments } = req.body;
+  const { first_name, last_name, email, phone, comments, manager } = req.body;
   knex('user')
     .where({ id: req.params.id })
-    .update({ first_name, last_name, email, phone, comments })
+    .update({ first_name, last_name, email, phone, comments, manager })
     .then(rows => {
       fu.upload(req);
       res.render('edit-user', { rows, alert: `${first_name} has been updated.` });
@@ -131,3 +131,35 @@ export const viewall = (req, res) => {
     });
 }
 
+// Manager Auto Complete
+export const managerAutoComplete = (req, res) => {
+  console.log(req.query.q)
+  console.log('-----managerAutoComplete-----')
+  let searchTerm = '%' + req.query.q + '%';
+  
+  let query = knex('user');
+  if (req.query.q != undefined){
+    console.log('search term is not undefined');
+    console.log(searchTerm);
+    query.whereILike('first_name', searchTerm)
+    query.orWhereILike('last_name', searchTerm)
+    query.orWhereILike('email', searchTerm)
+    query.orWhereILike('phone', searchTerm)
+
+  }
+
+  query.then(rows => {
+      let arr = [];
+
+      rows.forEach(user => {
+        // append new value to the array
+
+        arr.push({ "id": user.first_name, "text": user.first_name });
+      });
+
+      res.json({ results: arr });
+    }).catch(err => {
+      console.log(err);
+
+    });
+}

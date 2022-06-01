@@ -39,5 +39,24 @@
 </div>
 {{/if}}
 <div class="col-12 d-grid">
+  <select class="js-data-example-ajax" id="manager" name="manager">
+    <option value={{this.manager}}>{{this.manager}}</option>
+  </select>
+</div>  
+<div class="col-12 d-grid">
   <button class="btn btn-primary" type="submit">Submit</button>
 </div>
+
+
+<script>
+  $(document).ready(function () {
+    $('.js-data-example-ajax').select2({
+      ajax: {
+        url: '/acmanagers',
+        dataType: 'json'
+        // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+      }
+    });
+  });
+
+</script>

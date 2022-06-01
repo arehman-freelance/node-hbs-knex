@@ -6,6 +6,7 @@ import * as userController from "../controllers/userController.js"
 // Routes
 router.get('/', userController.view);
 router.post('/', userController.find);
+router.get('/acmanagers', userController.managerAutoComplete);
 router.get('/adduser', userController.form);
 router.post('/adduser', userController.create);
 router.get('/edituser/:id', userController.edit);
