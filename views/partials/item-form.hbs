@@ -1,0 +1,62 @@
+<div class="col-6">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="item_code" value="{{this.item_code}}" placeholder="Item Code"
+      name="item_code">
+    <label for="item_code">Item Code</label>
+  </div>
+</div>
+<div class="col-6">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="item_name" value="{{this.item_name}}" placeholder="Item Name"
+      name="item_name">
+    <label for="item_name">Item Name</label>
+  </div>
+</div>
+<div class="col-6">
+  <div class="form-floating mb-3">
+    <input type="email" class="form-control" id="gross_price" value="{{this.gross_price}}" placeholder="Gross Pirce"
+      name="gross_price">
+    <label for="gross_price">Gross Pirce</label>
+  </div>
+</div>
+<div class="col-6">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="tax_rate" value="{{this.tax_rate}}" placeholder="Tax Rate"
+      name="tax_rate" onchange="calculateTax()">
+    <label for="tax_rate">Tax Rate</label>
+  </div>
+</div>
+<div class="col-6">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="tax_amount" value="{{this.tax_amount}}" placeholder="Tax Amount"
+      name="tax_amount">
+    <label for="tax_amount">Tax Amount</label>
+  </div>
+</div>
+<div class="col-6">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="net_price" value="{{this.net_price}}" placeholder="Net Price"
+      name="net_price">
+    <label for="net_price">Net Price</label>
+  </div>
+</div>
+<div class="col-12 d-grid">
+  <button class="btn btn-primary" type="submit">Submit</button>
+</div>
+
+<script>
+
+  const calculateTax = () => {
+    console.log('calulate tax....')
+    const gross_price = parseFloat($('#gross_price').val());
+    const tax_rate = parseFloat($('#tax_rate').val());
+    const tax_amount = gross_price * tax_rate / 100;
+    const net_price = gross_price + tax_amount;
+    $('#tax_amount').val(tax_amount);
+    $('#net_price').val(net_price);
+  }
+
+  $(document).ready(function () {
+  });
+
+</script>

@@ -8,6 +8,7 @@ const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 const userRoutes = require("./server/routes/user.js");
+const itemRoutes = require("./server/routes/item.js");
 const  pdfRoutes = require("./server/routes/pdf.js");
 const  loginRoutes = require("./server/routes/login.js");
 const  emailRoutes = require("./server/routes/email.js");
@@ -48,6 +49,9 @@ app.use('/pdf', pdfRoutes);
 
 // EMail Routes
 app.use('/email', emailRoutes);
+
+// Item Routes
+app.use('/item', itemRoutes);
 
 // User Routes
 app.use('/', userRoutes);
