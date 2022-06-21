@@ -2,6 +2,23 @@
 const knex = require("../db/connection.js");
 
 
+// View Users
+exports.view = (req, res) => {
+  console.log(req.query)
+
+  let query = knex('item');
+
+  query.then(rows => {
+    res.render('item', { rows});
+
+    // console.log('The data from user table: \n', rows);
+  }).catch(err => {
+    console.log(err);
+
+  });
+
+}
+
 // Edit user
 exports.edit = (req, res) => {
   knex('item')

@@ -32,8 +32,12 @@ app.use(cookieParser())
 app.use(express.static('public'));
 
 // Templating Engine
-const hbs = ehb.create({ extname: '.hbs', });
-app.engine('.hbs', hbs.engine);
+const hbs = ehb.create({ extname: '.hbs', helpers: {
+    toJSON : function(object) {
+      return JSON.stringify(object);
+    }
+  }});
+app.engine('.hbs', hbs.engine,);
 app.set('view engine', '.hbs');
 
 // Routes
