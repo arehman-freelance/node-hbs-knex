@@ -18,8 +18,8 @@
     </tr>
   </thead>
   <tbody>
-
     {{#each rows}}
+
     <tr>
       <th scope="row">{{this.id}}</th>
       <td>{{this.item_code}}</td>
@@ -27,8 +27,8 @@
       <td>{{this.gross_price}}</td>
       <td><input type="text" class="form-control" id="tax_rate" value="{{this.tax_rate}}" placeholder="Tax Rate"
           name="tax_rate" onchange="calculateTax({{toJSON  this}}, this.value)"></td>
-      <td>{{this.tax_amount}}</td>
-      <td>{{this.net_price}}</td>
+      <td id="tax_amount_{{this.id}}">{{this.tax_amount}}</td>
+      <td id="net_price_{{this.id}}">{{this.net_price}}</td>
       <td class="text-end">
         <a href="/item/edititem/{{this.id}}" type="button" class="btn btn-primary btn-small"><i
             class="bi bi-pencil"></i>
@@ -46,6 +46,11 @@
     console.log('calulate tax....')
     console.log(item)
     console.log(v)
+
+    const tax_amount = parseFloat(item.gross_price) * parseFloat(v)/100;
+    const net_price = parseFloat(item.gross_price) + tax_amount;
+    $(`#tax_amount_${item.id}`).text(tax_amount);
+    $(`#net_price_${item.id}`).text(net_price);
 
   }
 
